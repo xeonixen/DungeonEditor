@@ -19,6 +19,7 @@ namespace DungeonEditorV2
 
     public class Tile
     {
+        
         private TileTypes _tileType;
 
         public TileTypes TileType

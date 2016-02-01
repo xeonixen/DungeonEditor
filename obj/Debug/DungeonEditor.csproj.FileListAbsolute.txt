@@ -14,3 +14,19 @@ C:\Users\Marcus\Documents\Visual Studio 2015\Projects\DungeonEditor\obj\Debug\Du
 C:\Users\Marcus\Documents\Visual Studio 2015\Projects\DungeonEditor\obj\Debug\DungeonEditor.csproj.GenerateResource.Cache
 C:\Users\Marcus\Documents\Visual Studio 2015\Projects\DungeonEditor\obj\Debug\DungeonEditorV2.exe
 C:\Users\Marcus\Documents\Visual Studio 2015\Projects\DungeonEditor\obj\Debug\DungeonEditorV2.pdb
+C:\Users\Marcus\Source\Repos\DungeonEditor\bin\Debug\DungeonEditorV2.exe.config
+C:\Users\Marcus\Source\Repos\DungeonEditor\bin\Debug\DungeonEditorV2.exe
+C:\Users\Marcus\Source\Repos\DungeonEditor\bin\Debug\DungeonEditorV2.pdb
+C:\Users\Marcus\Source\Repos\DungeonEditor\obj\Debug\DungeonEditor.csprojResolveAssemblyReference.cache
+C:\Users\Marcus\Source\Repos\DungeonEditor\obj\Debug\MainWindow.g.cs
+C:\Users\Marcus\Source\Repos\DungeonEditor\obj\Debug\RoomEditor.g.cs
+C:\Users\Marcus\Source\Repos\DungeonEditor\obj\Debug\App.g.cs
+C:\Users\Marcus\Source\Repos\DungeonEditor\obj\Debug\DungeonEditorV2_MarkupCompile.cache
+C:\Users\Marcus\Source\Repos\DungeonEditor\obj\Debug\DungeonEditorV2_MarkupCompile.lref
+C:\Users\Marcus\Source\Repos\DungeonEditor\obj\Debug\MainWindow.baml
+C:\Users\Marcus\Source\Repos\DungeonEditor\obj\Debug\RoomEditor.baml
+C:\Users\Marcus\Source\Repos\DungeonEditor\obj\Debug\DungeonEditorV2.g.resources
+C:\Users\Marcus\Source\Repos\DungeonEditor\obj\Debug\DungeonEditorV2.Properties.Resources.resources
+C:\Users\Marcus\Source\Repos\DungeonEditor\obj\Debug\DungeonEditor.csproj.GenerateResource.Cache
+C:\Users\Marcus\Source\Repos\DungeonEditor\obj\Debug\DungeonEditorV2.exe
+C:\Users\Marcus\Source\Repos\DungeonEditor\obj\Debug\DungeonEditorV2.pdb

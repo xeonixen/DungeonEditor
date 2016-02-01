@@ -5,12 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DungeonEditorV2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="1920" Width="1080">
+        Title="MainWindow" Height="768" Width="1024">
     <!--<ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">-->
-        
-        <Canvas x:Name="BaseCanvas" Margin="0" />
+    <Grid>
+        <Menu>
+            <MenuItem Header="_File">
+                <MenuItem Header="_Open Room" Click="MenuOpenRoomClick" />
+                <MenuItem Header="_Quit" Click="MenuQuitClick"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="_Tools">
+                <MenuItem Header="_Room Editor" Click="MenuRoomEditorClick"></MenuItem>
+            </MenuItem>
+            
+        </Menu>
+        <Canvas x:Name="BaseCanvas"  Margin="0,30,0,0"/>
+    </Grid>
     <!--</ScrollViewer>-->
-        
-    
-   
+
+
+
 </Window>

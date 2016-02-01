@@ -5,6 +5,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using Microsoft.Win32;
 
 namespace DungeonEditorV2
@@ -18,12 +19,36 @@ namespace DungeonEditorV2
         private TileTypes _selectedTileType;
         //private Tile[] _roomTiles;
         private readonly int _tilesize = 43;
+        private bool _lMouseButtonDown ;
+        DispatcherTimer _timer = new DispatcherTimer();
 
         public RoomEditor()
         {
             InitializeComponent();
             MouseLeftButtonDown += RoomEditor_MouseLeftButtonDown;
             MouseRightButtonDown += RoomEditor_MouseRightButtonDown;
+            MouseLeftButtonUp += RoomEditor_MouseLeftButtonUp;
+            _timer.Interval=TimeSpan.FromMilliseconds(20);
+            _timer.Tick += _timer_Tick;
+            _timer.Start();
+        }
+
+        private void _timer_Tick(object sender, EventArgs e)
+        {
+            var mpos = Mouse.GetPosition(BaseCanvas);
+            if (_lMouseButtonDown)
+            {
+                var index =
+                (int)
+                    (Math.Floor(mpos.Y / _tilesize) * Math.Ceiling(_room.Image.Source.Width / _tilesize) +
+                     Math.Floor(mpos.X / _tilesize));
+                if (index >= 0 && index < _room.Tiles.Length) _room.Tiles[index].TileType = _selectedTileType;
+            }
+        }
+
+        private void RoomEditor_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            _lMouseButtonDown = false;
         }
 
         private void RoomEditor_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
@@ -60,6 +85,7 @@ namespace DungeonEditorV2
                     (Math.Floor(mpos.Y/_tilesize)*Math.Ceiling(_room.Image.Source.Width/_tilesize) +
                      Math.Floor(mpos.X/_tilesize));
             if (index >= 0 && index < _room.Tiles.Length) _room.Tiles[index].TileType = _selectedTileType;
+            _lMouseButtonDown = true;
         }
 
         private void InitGrid()
@@ -78,6 +104,7 @@ namespace DungeonEditorV2
                 roomTile.Rectangle.Width = _tilesize - 1;
                 roomTile.Rectangle.Height = _tilesize - 1;
                 roomTile.Rectangle.StrokeThickness = 2;
+                
 
                 BaseCanvas.Children.Add(roomTile.Rectangle);
                 Canvas.SetLeft(roomTile.Rectangle, x*_tilesize + 1);
@@ -104,7 +131,7 @@ namespace DungeonEditorV2
                     (int)
                         (Math.Ceiling(_room.Image.Source.Width/_tilesize)*
                          Math.Ceiling(_room.Image.Source.Height/_tilesize))];
-            for (var i = 0; i < _room.Tiles.Length; i++) _room.Tiles[i] = new Tile();
+            for (var i = 0; i < _room.Tiles.Length; i++) _room.Tiles[i] = new Tile() {TileType = TileTypes.Floor};
 
             UpdateRoomDrawing();
         }

@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Windows.Threading;
+using Microsoft.Win32;
 
 namespace DungeonEditorV2
 {
@@ -16,12 +15,12 @@ namespace DungeonEditorV2
     public partial class MainWindow
     {
         private readonly DispatcherTimer _timer = new DispatcherTimer();
+        private Point _mouseDragOffset;
         private bool _moveCanvas;
         private int _roomTemplateIndex;
         private bool _updatePosition;
         public ScaleTransform GlobalScaleTransform = new ScaleTransform(0.2d, 0.2d);
         public Level Level;
-        private Point _mouseDragOffset;
 
         public MainWindow()
         {
@@ -36,47 +35,49 @@ namespace DungeonEditorV2
             // InitGrid();
         }
 
-        private void InitGrid()
-        {
-            var grid = new List<Shape>();
-            for (var i = (int) (Level.TileSize*GlobalScaleTransform.ScaleX);
-                i < Level.Size.Height;
-                i += (int) (Level.TileSize*GlobalScaleTransform.ScaleX))
-            {
-                grid.Add(new Line
-                {
-                    X1 = 0,
-                    Y1 = i,
-                    X2 = Level.Size.Width,
-                    Y2 = i,
-                    Stroke = Brushes.Gray,
-                    StrokeThickness = 1
-                });
-            }
-            for (var i = (int) (Level.TileSize*GlobalScaleTransform.ScaleX);
-                i < Level.Size.Width;
-                i += (int) (Level.TileSize*GlobalScaleTransform.ScaleX))
-            {
-                grid.Add(new Line
-                {
-                    X1 = i,
-                    Y1 = 0,
-                    X2 = i,
-                    Y2 = Level.Size.Height,
-                    Stroke = Brushes.Gray,
-                    StrokeThickness = 1
-                });
-            }
-            grid.ForEach(a => BaseCanvas.Children.Add(a));
-            BaseCanvas.Width = Level.Size.Width;
-            BaseCanvas.Height = Level.Size.Height;
-        }
+        //private void InitGrid()
+        //{
+        //    var grid = new List<Shape>();
+        //    for (var i = (int) (Level.TileSize*GlobalScaleTransform.ScaleX);
+        //        i < Level.Size.Height;
+        //        i += (int) (Level.TileSize*GlobalScaleTransform.ScaleX))
+        //    {
+        //        grid.Add(new Line
+        //        {
+        //            X1 = 0,
+        //            Y1 = i,
+        //            X2 = Level.Size.Width,
+        //            Y2 = i,
+        //            Stroke = Brushes.Gray,
+        //            StrokeThickness = 1
+        //        });
+        //    }
+        //    for (var i = (int) (Level.TileSize*GlobalScaleTransform.ScaleX);
+        //        i < Level.Size.Width;
+        //        i += (int) (Level.TileSize*GlobalScaleTransform.ScaleX))
+        //    {
+        //        grid.Add(new Line
+        //        {
+        //            X1 = i,
+        //            Y1 = 0,
+        //            X2 = i,
+        //            Y2 = Level.Size.Height,
+        //            Stroke = Brushes.Gray,
+        //            StrokeThickness = 1
+        //        });
+        //    }
+        //    grid.ForEach(a => BaseCanvas.Children.Add(a));
+        //    BaseCanvas.Width = Level.Size.Width;
+        //    BaseCanvas.Height = Level.Size.Height;
+        //}
 
         private void AddRoomTemplates()
         {
             for (var i = 1; i < 7; i++)
                 Level.AvailableRoomTemplates.Add($"pack://application:,,,/Images/Dungion{i}.png");
         }
+
+        
 
         private void KeyHandler(object sender, KeyEventArgs e)
         {
@@ -100,8 +101,7 @@ namespace DungeonEditorV2
                     MessageBox.Show(Level.GetRoomData());
                     break;
                 case Key.O:
-                    var re = new RoomEditor();
-                    re.Show();
+                    
                     break;
             }
         }
@@ -152,8 +152,9 @@ namespace DungeonEditorV2
                     switch (e.ButtonState)
                     {
                         case MouseButtonState.Pressed:
-                            if (Mouse.DirectlyOver is Image)
-                                Level.SetCurrentRoom((Image) Mouse.DirectlyOver);
+                            var over = Mouse.DirectlyOver as Image;
+                            if (over != null)
+                                Level.SetCurrentRoom(over);
                             if (Level.CurrentRoom != null)
                                 _mouseDragOffset = new Point(mousePosition.X - Level.CurrentRoom.Position.X,
                                     mousePosition.Y - Level.CurrentRoom.Position.Y);
@@ -178,6 +179,27 @@ namespace DungeonEditorV2
                     }
                     break;
             }
+        }
+
+        private void MenuOpenRoomClick(object sender, RoutedEventArgs e)
+        {
+            var fdg = new OpenFileDialog();
+            fdg.ShowDialog();
+            if (!string.IsNullOrWhiteSpace(fdg.FileName))
+            {
+               //TODO  add to room list.
+            }
+        }
+
+        private void MenuQuitClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void MenuRoomEditorClick(object sender, RoutedEventArgs e)
+        {
+            var re = new RoomEditor();
+            re.Show();
         }
     }
 }
